@@ -20,7 +20,9 @@ if node[:ssl_certs].length > 0
   end
 end
 
-node[:ssl_certs].each do |cert_name|
+ssl_certs = node[:ssl_certs].reject { |c| c.nil? || c.empty? }
+
+ssl_certs.each do |cert_name|
   certificates  = Chef::EncryptedDataBagItem.load("certs", cert_name, node[:private_key_raw])
   cert = certificates[:cert]
   cert = cert.chomp + "\n" if cert

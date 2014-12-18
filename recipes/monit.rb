@@ -15,5 +15,6 @@ unwind 'service[monit]'
 
 service 'monit' do
   provider Chef::Provider::Service::Upstart
-  supports status: true, restart: true, reload: true, start: true
+  supports status: true, restart: true, reload: false, start: true
+  reload_command '/usr/bin/monit reload'
 end
